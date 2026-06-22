@@ -42,7 +42,7 @@ A strictly decentralized stablecoin protocol for **PulseChain**, pegged to **$1*
 EV = (Principal × HEX_Price) + EarnedRewards + LongBonus − TimeDiscount
 ```
 
-- **EarnedRewards**: conservative — only already accrued rewards (Phase 1)
+- **EarnedRewards**: conservative only already accrued rewards (Phase 1)
 - **LongBonus**: 0% / 5% / 10–15% (tier-based)
 - **TimeDiscount**: linear 0–15%
 - **Hard cap**: 2× Principal Value
@@ -58,7 +58,7 @@ EV = (Principal × HEX_Price) + EarnedRewards + LongBonus − TimeDiscount
 ## Two Collateral Modes
 
 ### 1. Registered (existing stakes)
-The user registers a `stakeId` owned by their wallet. The protocol **monitors** on-chain for `endStake` — if triggered, a 20–40% penalty applies.
+The user registers a `stakeId` owned by their wallet. The protocol **monitors** on-chain for `endStake`  if triggered, a 20–40% penalty applies.
 
 > Note: HEX stakes cannot be transferred between addresses. Full custody is only available via custodial mode.
 
