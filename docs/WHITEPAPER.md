@@ -8,7 +8,7 @@
 
 ## Abstract
 
-DTSC (Decentralized T-Share Coin) is a strictly decentralized stablecoin targeting a $1 USD peg, backed exclusively by long-duration HEX T-shares (≥2,000 days to maturity). There is no governance token — all value accrues directly to participants.
+DTSC (Decentralized T-Share Coin) is a strictly decentralized stablecoin targeting a $1 USD peg, backed exclusively by long-duration HEX T-shares (≥2,000 days to maturity). There is no governance token all value accrues directly to participants.
 
 ---
 
@@ -26,7 +26,7 @@ DTSC (Decentralized T-Share Coin) is a strictly decentralized stablecoin targeti
 
 ## 2. Tokenomics
 
-**Single token:** `DTSC` — ERC-20 stablecoin (18 decimals)
+**Single token:** `DTSC` ERC-20 stablecoin (18 decimals)
 
 | Mechanism | Description |
 |-----------|-------------|
