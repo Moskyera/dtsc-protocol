@@ -1,5 +1,7 @@
 # DTSC — Decentralized T-Share Coin
 
+[![CI](https://github.com/Moskyera/dtsc-protocol/actions/workflows/test.yml/badge.svg)](https://github.com/Moskyera/dtsc-protocol/actions/workflows/test.yml)
+
 A strictly decentralized stablecoin protocol for **PulseChain**, pegged to **$1**, backed exclusively by **HEX T-shares** (minimum 2,000 days to maturity).
 
 ## Architecture
@@ -42,7 +44,7 @@ A strictly decentralized stablecoin protocol for **PulseChain**, pegged to **$1*
 EV = (Principal × HEX_Price) + EarnedRewards + LongBonus − TimeDiscount
 ```
 
-- **EarnedRewards**: conservative only already accrued rewards (Phase 1)
+- **EarnedRewards**: conservative — only already accrued rewards (Phase 1)
 - **LongBonus**: 0% / 5% / 10–15% (tier-based)
 - **TimeDiscount**: linear 0–15%
 - **Hard cap**: 2× Principal Value
@@ -103,9 +105,11 @@ After deploy: addresses are automatically locked via `dtsc.lockWiring()`.
 ## Documentation
 
 - [Whitepaper](docs/WHITEPAPER.md)
+- [Launch Playbook](docs/LAUNCH.md)
 - [Security & Audit Checklist](docs/SECURITY.md)
 - [Audit Package](docs/AUDIT_PACKAGE.md)
 - [Internal Findings](docs/AUDIT_FINDINGS.md)
+- [Bug Bounty (draft)](docs/BUG_BOUNTY.md)
 
 ## Roadmap
 
@@ -127,4 +131,4 @@ After deploy: addresses are automatically locked via `dtsc.lockWiring()`.
 
 ## License
 
-MIT
+[MIT](LICENSE)

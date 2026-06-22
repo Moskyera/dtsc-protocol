@@ -185,7 +185,7 @@ Low risk with CEI + VM guard.
 1. ✅ H-08 same-block mitigation (TWAP collateral + `lastTwapPrice` cache)
 2. ✅ M-07 bad debt policy + `MIN_SP_COVERAGE_DTSC` gate
 3. ✅ M-04 CR cache for redemption
-4. ✅ Audit package (`docs/AUDIT_PACKAGE.md`) + bug bounty draft (`docs/BUG_BOUNTY.md`)
+4. ✅ Audit package (`docs/AUDIT_PACKAGE.md`) + bug bounty draft (`docs/BUG_BOUNTY.md`) + launch playbook (`docs/LAUNCH.md`)
 5. ⏳ External audits (2–3 firms) — package ready, outreach needed
 6. ⏳ Live PulseChain liquidity check (`script/PreDeployChecklist.s.sol`, `script/VerifyLiquidity.s.sol`)
 7. ⏳ Chainlink redundancy (Phase 2 — `IChainlinkFeed` interface only)

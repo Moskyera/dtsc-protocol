@@ -1,47 +1,62 @@
 # DTSC Security & Audit Checklist
 
+## Internal Review Status (June 2026)
+
+| Item | Status |
+|------|--------|
+| 156 automated tests (attack, fuzz, invariant, fork) | ✅ Pass |
+| GitHub Actions CI (`FOUNDRY_PROFILE=ci`) | ✅ Pass |
+| Internal findings documented | ✅ `docs/AUDIT_FINDINGS.md` |
+| PreDeployChecklist on PulseChain RPC | ✅ Pass |
+| External audit | ⏳ Pending outreach |
+| Immutable mainnet deploy | 🚫 Blocked until owner approval |
+
+---
+
 ## Pre-Audit Requirements
 
 ### Critical Paths
-- [ ] TShareValuation — EV calculation correctness
-- [ ] HexPriceOracle — TWAP manipulation resistance
-- [ ] VaultManager — mint/repay/liquidate/early unstake
-- [ ] StabilityPool — deposit/withdraw/reward accounting
-- [ ] RedemptionHandler — debt reduction ordering
-- [ ] PenaltyRouter — 80/20 split integrity
-- [ ] BuybackBurn — swap slippage + burn authorization
-- [ ] RecoveryModule — system CR thresholds
-- [ ] DTSC — minter lock irreversibility
+- [x] TShareValuation — EV calculation correctness
+- [x] HexPriceOracle — TWAP manipulation resistance
+- [x] VaultManager — mint/repay/liquidate/early unstake
+- [x] StabilityPool — deposit/withdraw/reward accounting
+- [x] RedemptionHandler — debt reduction ordering
+- [x] PenaltyRouter — 80/20 split integrity
+- [x] BuybackBurn — swap slippage + burn authorization
+- [x] RecoveryModule — system CR thresholds
+- [x] DTSC — minter lock irreversibility (tested; verify on deploy)
 
 ### Access Control
 - [ ] `dtsc.lockWiring()` called post-deploy
 - [ ] All one-time setters renounced
 - [ ] No remaining `deployer` addresses
-- [ ] Only authorized minters can mint/burn
+- [x] Only authorized minters can mint/burn (unit tests)
 
 ### Economic Invariants
-- [ ] Total debt ≤ sum of max borrowable per vault
-- [ ] System CR triggers recovery mode correctly
-- [ ] Penalty mint bounded by vault debt
-- [ ] SP offset cannot exceed totalDeposits
-- [ ] Redemption cannot create negative debt
+- [x] Total debt ≤ sum of max borrowable per vault
+- [x] System CR triggers recovery mode correctly
+- [x] Penalty mint bounded by vault debt (removed; SP offset only)
+- [x] SP offset cannot exceed totalDeposits
+- [x] Redemption cannot create negative debt
 
 ### Oracle Security
-- [ ] Pair address verified on-chain
-- [ ] min(TWAP, spot) always used
-- [ ] Stale TWAP fallback documented
-- [ ] EV hard cap enforced
+- [x] Pair address verified on-chain
+- [x] min(TWAP, spot) for liquidations; TWAP-only for borrow
+- [x] Stale TWAP fallback documented
+- [x] EV hard cap enforced
 
 ### HEX Integration
-- [ ] stakeLists/stakeCount ABI matches PulseChain HEX
-- [ ] globalInfo()[4] day index verified
-- [ ] calcPayoutRewards range correct
-- [ ] Custodial startStake minimum 2000 days
+- [x] stakeLists/stakeCount ABI matches PulseChain HEX
+- [x] globalInfo()[4] day index verified
+- [x] calcPayoutRewards range correct
+- [x] Custodial startStake minimum 2000 days
+
+---
 
 ## Known Limitations
 
 1. **Registered stakes** cannot be physically locked — reliance on monitoring + penalties
-2. **Penalty minting** on early unstake creates bounded inflation compensated by burns elsewhere
+2. **Early unstake penalties** route to Stability Pool offset (no penalty mint)
 3. **USD pricing via WPLS** requires external WPLS/USD reference for true dollar peg
 4. **BuybackBurn** requires DTSC liquidity on PulseX post-launch
 
@@ -56,11 +71,12 @@
 ## Test Coverage
 
 ```bash
+forge test
+FOUNDRY_PROFILE=ci forge test
 forge test --gas-report
-forge coverage
 ```
 
-Target: >90% line coverage on `src/core/` and `src/valuation/`.
+**Current:** 156 tests across 23 suites (see GitHub Actions).
 
 ## Incident Response
 

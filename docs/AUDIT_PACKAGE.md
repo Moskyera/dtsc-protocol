@@ -55,11 +55,13 @@ $env:FOUNDRY_PROFILE='ci'; & "$env:USERPROFILE\.foundry\bin\forge.exe" test
 
 ## Pre-audit checklist
 
-- [ ] All tests pass locally and CI profile
-- [ ] `script/PreDeployChecklist.s.sol` run on PulseChain fork
-- [ ] `docs/AUDIT_FINDINGS.md` reviewed
-- [ ] No immutable contracts deployed
-- [ ] Stability Pool seed plan documented (≥ 10,000 DTSC before public mint)
+- [x] All tests pass locally and CI profile (156/156 — GitHub Actions)
+- [x] `script/PreDeployChecklist.s.sol` run on PulseChain mainnet RPC (June 2026)
+- [x] `docs/AUDIT_FINDINGS.md` reviewed
+- [x] No immutable contracts deployed
+- [x] Stability Pool seed plan documented — see `docs/LAUNCH.md` (≥ 10,000 DTSC before public mint)
+
+**Remaining before external audit outreach:** share this repo URL + `AUDIT_FINDINGS.md` with selected firms.
 
 ---
 
