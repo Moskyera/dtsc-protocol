@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="el">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -18,21 +18,21 @@
     </div>
     <div class="header-actions">
       <span id="walletAddr" class="wallet-addr">—</span>
-      <button id="connectBtn" class="btn primary">Σύνδεση Wallet</button>
+      <button id="connectBtn" class="btn primary">Connect Wallet</button>
     </div>
   </header>
 
   <main class="container">
     <section class="hero">
       <h1>Decentralized T-Share Coin</h1>
-      <p>Stablecoin $1 backed από μακροχρόνια HEX T-shares (2.000+ ημέρες). Χωρίς governance token.</p>
+      <p>$1 stablecoin backed by long-duration HEX T-shares (2,000+ days). No governance token.</p>
       <div class="hero-stats">
         <div class="stat-card">
           <span class="stat-label">HEX Price</span>
           <span id="hexPrice" class="stat-value">—</span>
         </div>
         <div class="stat-card">
-          <span class="stat-label">Το DTSC σου</span>
+          <span class="stat-label">Your DTSC</span>
           <span id="dtscBalance" class="stat-value">—</span>
         </div>
         <div class="stat-card">
@@ -46,15 +46,15 @@
     <div class="grid-2">
       <section class="panel">
         <div class="panel-head">
-          <h2>Τα T-Shares σου</h2>
-          <button id="refreshBtn" class="btn ghost">Ανανέωση</button>
+          <h2>Your T-Shares</h2>
+          <button id="refreshBtn" class="btn ghost">Refresh</button>
         </div>
         <div id="stakesList" class="list"></div>
       </section>
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Τα Vaults σου</h2>
+          <h2>Your Vaults</h2>
         </div>
         <div id="vaultsList" class="list"></div>
       </section>
@@ -63,24 +63,24 @@
     <div class="grid-2">
       <section class="panel">
         <div class="panel-head"><h2>Stability Pool</h2></div>
-        <p class="muted">Κατάθεσε DTSC · Κέρδισε 80% των ποινών</p>
+        <p class="muted">Deposit DTSC · Earn 80% of penalties</p>
         <div class="sp-stats">
-          <div><span class="muted">Η κατάθεσή σου</span><strong id="spDeposit">0</strong></div>
+          <div><span class="muted">Your deposit</span><strong id="spDeposit">0</strong></div>
           <div><span class="muted">Rewards</span><strong id="spReward">0</strong></div>
-          <div><span class="muted">Σύνολο Pool</span><strong id="spTotal">0</strong></div>
+          <div><span class="muted">Pool total</span><strong id="spTotal">0</strong></div>
         </div>
         <div class="row">
-          <input id="spAmount" type="number" placeholder="DTSC ποσό" class="input" />
-          <button id="spDepositBtn" class="btn primary">Κατάθεση</button>
+          <input id="spAmount" type="number" placeholder="DTSC amount" class="input" />
+          <button id="spDepositBtn" class="btn primary">Deposit</button>
           <button id="spClaimBtn" class="btn secondary">Claim Rewards</button>
         </div>
       </section>
 
       <section class="panel">
         <div class="panel-head"><h2>Redemption</h2></div>
-        <p class="muted">Κάψε DTSC για μείωση debt υποεξασφαλισμένων vaults (peg mechanism)</p>
+        <p class="muted">Burn DTSC to reduce debt of undercollateralized vaults (peg mechanism)</p>
         <div class="row">
-          <input id="redeemAmount" type="number" placeholder="DTSC για redemption" class="input" />
+          <input id="redeemAmount" type="number" placeholder="DTSC to redeem" class="input" />
           <button id="redeemBtn" class="btn primary">Redeem</button>
         </div>
       </section>
@@ -88,7 +88,7 @@
 
     <section class="panel config-panel">
       <div class="panel-head"><h2>Contract Addresses</h2></div>
-      <p class="muted">Μετά το deploy, επικόλλησε τα addresses εδώ (αποθηκεύονται τοπικά)</p>
+      <p class="muted">After deploy, paste addresses here (saved locally)</p>
       <div class="config-grid">
         <label>DTSC <input id="addrDtsc" class="input mono" placeholder="0x…" /></label>
         <label>VaultManager <input id="addrVault" class="input mono" placeholder="0x…" /></label>
@@ -97,7 +97,7 @@
         <label>TShareValuation <input id="addrValuation" class="input mono" placeholder="0x…" /></label>
         <label>HexPriceOracle <input id="addrOracle" class="input mono" placeholder="0x…" /></label>
       </div>
-      <button id="saveContractsBtn" class="btn secondary">Αποθήκευση Addresses</button>
+      <button id="saveContractsBtn" class="btn secondary">Save Addresses</button>
     </section>
   </main>
 

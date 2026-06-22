@@ -1,8 +1,8 @@
 # DTSC — Decentralized T-Share Coin
 
-Αυστηρά αποκεντρωμένο stablecoin πρωτόκολλο για **PulseChain**, με peg στο **$1**, backed αποκλειστικά από **HEX T-shares** (ελάχιστο 2.000 ημέρες μέχρι ωρίμανση).
+A strictly decentralized stablecoin protocol for **PulseChain**, pegged to **$1**, backed exclusively by **HEX T-shares** (minimum 2,000 days to maturity).
 
-## Αρχιτεκτονική
+## Architecture
 
 ```
 ┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
@@ -23,47 +23,47 @@
 
 ## Contracts
 
-| Contract | Ρόλος |
-|----------|-------|
-| `DTSC.sol` | Stablecoin token (μόνο token του πρωτοκόλλου) |
+| Contract | Role |
+|----------|------|
+| `DTSC.sol` | Stablecoin token (the protocol's only token) |
 | `TShareValuation.sol` | On-chain Effective Value (EV) |
-| `HexPriceOracle.sol` | TWAP + spot από PulseX (conservative min) |
+| `HexPriceOracle.sol` | TWAP + spot from PulseX (conservative min) |
 | `VaultManager.sol` | Vaults, mint/repay, liquidation |
-| `StabilityPool.sol` | Κύριος μηχανισμός προστασίας peg |
-| `RedemptionHandler.sol` | Κύριος redemption μηχανισμός |
+| `StabilityPool.sol` | Primary peg defense mechanism |
+| `RedemptionHandler.sol` | Primary redemption mechanism |
 | `RecoveryModule.sol` | System-wide recovery mode |
-| `PenaltyRouter.sol` | 80/20 κατανομή ποινών |
-| `BuybackBurn.sol` | Δευτερεύων peg support |
+| `PenaltyRouter.sol` | 80/20 penalty split |
+| `BuybackBurn.sol` | Secondary peg support |
 | `DTSCDeployer.sol` | One-shot deploy + wiring lock |
 
-## Τύπος Αποτίμησης (EV)
+## Valuation Formula (EV)
 
 ```
 EV = (Principal × HEX_Price) + EarnedRewards + LongBonus − TimeDiscount
 ```
 
-- **EarnedRewards**: συντηρητικά — μόνο ήδη παραχθέντα (Phase 1)
+- **EarnedRewards**: conservative — only already accrued rewards (Phase 1)
 - **LongBonus**: 0% / 5% / 10–15% (tier-based)
-- **TimeDiscount**: γραμμικό 0–15%
+- **TimeDiscount**: linear 0–15%
 - **Hard cap**: 2× Principal Value
 
 ## Collateral Tiers
 
-| Tier | Ημέρες | Min CCR | LTV |
-|------|--------|---------|-----|
-| Long | 4.000–5.555 | 150% | ~66% |
-| Medium-Long | 2.000–3.999 | 160% | ~62.5% |
-| Μη επιτρεπτό | < 2.000 | — | — |
+| Tier | Days | Min CCR | LTV |
+|------|------|---------|-----|
+| Long | 4,000–5,555 | 150% | ~66% |
+| Medium-Long | 2,000–3,999 | 160% | ~62.5% |
+| Not allowed | < 2,000 | — | — |
 
-## Δύο Λειτουργίες Collateral
+## Two Collateral Modes
 
-### 1. Registered (υπάρχοντα stakes)
-Ο χρήστης δηλώνει `stakeId` που ανήκει στο wallet του. Το πρωτόκολλο **παρακολουθεί** on-chain αν γίνει `endStake` — σε αυτή την περίπτωση ενεργοποιείται πέναλτι 20–40%.
+### 1. Registered (existing stakes)
+The user registers a `stakeId` owned by their wallet. The protocol **monitors** on-chain for `endStake` — if triggered, a 20–40% penalty applies.
 
-> Σημείωση: Τα HEX stakes δεν μεταφέρονται μεταξύ addresses. Η πλήρης κηδεσία γίνεται μόνο με custodial mode.
+> Note: HEX stakes cannot be transferred between addresses. Full custody is only available via custodial mode.
 
-### 2. Custodial (νέα stakes)
-Ο χρήστης στέλνει HEX στο `VaultManager`, που καλεί `startStake` — το stake ανήκει στο contract (**πλήρες lock**).
+### 2. Custodial (new stakes)
+The user sends HEX to `VaultManager`, which calls `startStake` — the stake is owned by the contract (**full lock**).
 
 ## PulseChain Addresses (mainnet)
 
@@ -88,7 +88,7 @@ forge test
 ```powershell
 cd frontend
 .\serve.ps1
-# Άνοιξε http://localhost:5173 — σύνδεσε wallet, επικόλλησε deployed addresses
+# Open http://localhost:5173 — connect wallet, paste deployed addresses
 ```
 
 ### Deploy (PulseChain)
@@ -98,27 +98,29 @@ export PULSECHAIN_RPC_URL=https://rpc.pulsechain.com
 forge script script/Deploy.s.sol --rpc-url $PULSECHAIN_RPC_URL --broadcast
 ```
 
-Μετά το deploy: addresses αυτόματα locked via `dtsc.lockWiring()`.
+After deploy: addresses are automatically locked via `dtsc.lockWiring()`.
 
 ## Documentation
 
 - [Whitepaper](docs/WHITEPAPER.md)
 - [Security & Audit Checklist](docs/SECURITY.md)
+- [Audit Package](docs/AUDIT_PACKAGE.md)
+- [Internal Findings](docs/AUDIT_FINDINGS.md)
 
 ## Roadmap
 
-| Φάση | Δραστηριότητα |
-|------|---------------|
-| Σχεδιασμός | Whitepaper + design (τώρα) |
+| Phase | Activity |
+|-------|----------|
+| Design | Whitepaper + design (current) |
 | Development | Smart contracts + tests |
 | Audits | 2–3 audits + bug bounty |
-| Bootstrap | Incentives Long tier + Stability Pool |
+| Bootstrap | Long-tier incentives + Stability Pool |
 | Launch | Mainnet + renounce ownership |
 
-## Κίνδυνοι
+## Risks
 
-| Κίνδυνος | Mitigation |
-|----------|------------|
+| Risk | Mitigation |
+|------|------------|
 | Early unstake (registered) | Monitoring + 20–40% penalty + cooldown |
 | HEX price crash | Overcollateralization + SP + Recovery |
 | Oracle manipulation | TWAP + min(TWAP, spot) + haircut cap |

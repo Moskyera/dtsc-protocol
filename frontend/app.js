@@ -53,7 +53,7 @@ async function ensurePulseChain() {
 
 async function connectWallet() {
   if (!window.ethereum) {
-    setStatus("Εγκατάστησε MetaMask ή compatible wallet", "error");
+    setStatus("Install MetaMask or a compatible wallet", "error");
     return;
   }
   await ensurePulseChain();
@@ -62,8 +62,8 @@ async function connectWallet() {
   signer = await provider.getSigner();
   account = accounts[0];
   $("walletAddr").textContent = short(account);
-  $("connectBtn").textContent = "Συνδεδεμένο";
-  setStatus("Συνδέθηκες στο PulseChain", "ok");
+  $("connectBtn").textContent = "Connected";
+  setStatus("Connected to PulseChain", "ok");
   await refreshAll();
 }
 
@@ -121,7 +121,7 @@ async function loadStakes() {
   const count = await hex.stakeCount(account);
 
   if (count === 0n) {
-    list.innerHTML = "<p class='muted'>Δεν βρέθηκαν stakes ≥2000 ημέρες.</p>";
+    list.innerHTML = "<p class='muted'>No stakes with ≥2000 days remaining found.</p>";
     return;
   }
 
@@ -150,7 +150,7 @@ async function loadStakes() {
         <span class="badge">${remaining}d remaining</span>
       </div>
       <div class="stake-detail">${hexAmt.toLocaleString()} HEX · ID ${s.stakeId}${evText}</div>
-      <button class="btn secondary" data-stake="${i}">Άνοιγμα Vault</button>
+      <button class="btn secondary" data-stake="${i}">Open Vault</button>
     `;
     div.querySelector("button").onclick = () => openVault(Number(i));
     list.appendChild(div);
@@ -159,14 +159,14 @@ async function loadStakes() {
 
 async function openVault(stakeIndex) {
   if (!contracts.vaultManager) {
-    setStatus("Ορίσε VaultManager address", "error");
+    setStatus("Set VaultManager address", "error");
     return;
   }
   const vault = new Contract(contracts.vaultManager, VAULT_ABI, signer);
-  setStatus("Ανοίγει vault…");
+  setStatus("Opening vault…");
   const tx = await vault.openVaultWithExistingStake(stakeIndex);
   await tx.wait();
-  setStatus("Vault δημιουργήθηκε!", "ok");
+  setStatus("Vault created!", "ok");
   await loadVaults();
 }
 
@@ -179,7 +179,7 @@ async function loadVaults() {
   const ids = await vault.getOwnerVaults(account);
 
   if (ids.length === 0) {
-    list.innerHTML = "<p class='muted'>Δεν έχεις ενεργά vaults.</p>";
+    list.innerHTML = "<p class='muted'>You have no active vaults.</p>";
     return;
   }
 
@@ -259,7 +259,7 @@ async function spDeposit() {
   await (await dtsc.approve(contracts.stabilityPool, amount)).wait();
   const sp = new Contract(contracts.stabilityPool, STABILITY_POOL_ABI, signer);
   await (await sp.deposit(amount)).wait();
-  setStatus("Κατάθεση στο Stability Pool ολοκληρώθηκε", "ok");
+  setStatus("Stability Pool deposit complete", "ok");
   await loadStabilityPool();
 }
 
@@ -276,7 +276,7 @@ async function redeemDtsc() {
   await (await dtsc.approve(contracts.redemptionHandler, amount)).wait();
   const rh = new Contract(contracts.redemptionHandler, REDEMPTION_ABI, signer);
   await (await rh.redeem(amount, 20)).wait();
-  setStatus("Redemption ολοκληρώθηκε", "ok");
+  setStatus("Redemption complete", "ok");
   await refreshAll();
 }
 
