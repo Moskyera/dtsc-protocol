@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DTSC — Decentralized T-Share Coin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <header class="header">
+    <div class="brand">
+      <div class="logo">DTSC</div>
+      <div class="tagline">T-Share Backed Stablecoin · PulseChain</div>
+    </div>
+    <div class="header-actions">
+      <span id="walletAddr" class="wallet-addr">—</span>
+      <button id="connectBtn" class="btn primary">Σύνδεση Wallet</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Decentralized T-Share Coin</h1>
+      <p>Stablecoin $1 backed από μακροχρόνια HEX T-shares (2.000+ ημέρες). Χωρίς governance token.</p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-label">HEX Price</span>
+          <span id="hexPrice" class="stat-value">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Το DTSC σου</span>
+          <span id="dtscBalance" class="stat-value">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">TWAP / Spot</span>
+          <span class="stat-value mono"><span id="hexTwap">—</span> / <span id="hexSpot">—</span></span>
+        </div>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Τα T-Shares σου</h2>
+          <button id="refreshBtn" class="btn ghost">Ανανέωση</button>
+        </div>
+        <div id="stakesList" class="list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Τα Vaults σου</h2>
+        </div>
+        <div id="vaultsList" class="list"></div>
+      </section>
+    </div>
+
+    <div class="grid-2">
+      <section class="panel">
+        <div class="panel-head"><h2>Stability Pool</h2></div>
+        <p class="muted">Κατάθεσε DTSC · Κέρδισε 80% των ποινών</p>
+        <div class="sp-stats">
+          <div><span class="muted">Η κατάθεσή σου</span><strong id="spDeposit">0</strong></div>
+          <div><span class="muted">Rewards</span><strong id="spReward">0</strong></div>
+          <div><span class="muted">Σύνολο Pool</span><strong id="spTotal">0</strong></div>
+        </div>
+        <div class="row">
+          <input id="spAmount" type="number" placeholder="DTSC ποσό" class="input" />
+          <button id="spDepositBtn" class="btn primary">Κατάθεση</button>
+          <button id="spClaimBtn" class="btn secondary">Claim Rewards</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>Redemption</h2></div>
+        <p class="muted">Κάψε DTSC για μείωση debt υποεξασφαλισμένων vaults (peg mechanism)</p>
+        <div class="row">
+          <input id="redeemAmount" type="number" placeholder="DTSC για redemption" class="input" />
+          <button id="redeemBtn" class="btn primary">Redeem</button>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel config-panel">
+      <div class="panel-head"><h2>Contract Addresses</h2></div>
+      <p class="muted">Μετά το deploy, επικόλλησε τα addresses εδώ (αποθηκεύονται τοπικά)</p>
+      <div class="config-grid">
+        <label>DTSC <input id="addrDtsc" class="input mono" placeholder="0x…" /></label>
+        <label>VaultManager <input id="addrVault" class="input mono" placeholder="0x…" /></label>
+        <label>StabilityPool <input id="addrSp" class="input mono" placeholder="0x…" /></label>
+        <label>RedemptionHandler <input id="addrRedeem" class="input mono" placeholder="0x…" /></label>
+        <label>TShareValuation <input id="addrValuation" class="input mono" placeholder="0x…" /></label>
+        <label>HexPriceOracle <input id="addrOracle" class="input mono" placeholder="0x…" /></label>
+      </div>
+      <button id="saveContractsBtn" class="btn secondary">Αποθήκευση Addresses</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>DTSC Protocol · PulseChain · No governance token</span>
+    <a href="../docs/WHITEPAPER.md" target="_blank">Whitepaper</a>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

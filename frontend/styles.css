@@ -1,0 +1,262 @@
+:root {
+  --bg: #0a0c10;
+  --surface: #12151c;
+  --surface2: #1a1f2a;
+  --border: #2a3142;
+  --text: #e8ecf4;
+  --muted: #8b95a8;
+  --accent: #3dffa8;
+  --accent-dim: #2bc484;
+  --warn: #ffb347;
+  --error: #ff6b6b;
+  --radius: 12px;
+  --font: "DM Sans", system-ui, sans-serif;
+  --mono: "JetBrains Mono", monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(61, 255, 168, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61, 255, 168, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header, .container, .footer { position: relative; z-index: 1; }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.tagline { font-size: 0.8rem; color: var(--muted); }
+
+.header-actions { display: flex; align-items: center; gap: 1rem; }
+
+.wallet-addr {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.hero { margin-bottom: 2rem; }
+
+.hero h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.hero p { color: var(--muted); max-width: 560px; }
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}
+
+.stat-label { display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.stat-value { display: block; font-size: 1.35rem; font-weight: 600; margin-top: 0.25rem; }
+.mono { font-family: var(--mono); font-size: 0.95rem; }
+
+.status {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-height: 2.5rem;
+}
+
+.status.ok { background: rgba(61, 255, 168, 0.12); color: var(--accent); border: 1px solid rgba(61, 255, 168, 0.25); }
+.status.error { background: rgba(255, 107, 107, 0.12); color: var(--error); border: 1px solid rgba(255, 107, 107, 0.25); }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.panel h2 { font-size: 1.1rem; font-weight: 600; }
+
+.muted { color: var(--muted); font-size: 0.875rem; margin-bottom: 1rem; }
+
+.list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.stake-card, .vault-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.stake-meta, .vault-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.stake-detail { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.75rem; }
+
+.badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  background: var(--border);
+  color: var(--muted);
+}
+
+.badge.ok { background: rgba(61, 255, 168, 0.15); color: var(--accent); }
+.badge.warn { background: rgba(255, 179, 71, 0.15); color: var(--warn); }
+
+.vault-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.vault-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+
+.btn {
+  font-family: var(--font);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn.primary { background: var(--accent); color: var(--bg); }
+.btn.primary:hover:not(:disabled) { background: var(--accent-dim); }
+
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--muted);
+  padding: 0.35rem 0.75rem;
+}
+
+.input, .input-sm {
+  font-family: var(--mono);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 0.6rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.input-sm { flex: 1; min-width: 120px; padding: 0.45rem 0.65rem; }
+
+.row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.row .input { flex: 1; min-width: 140px; }
+
+.sp-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.sp-stats strong { display: block; font-size: 1.1rem; margin-top: 0.2rem; }
+
+.config-panel { margin-top: 1.25rem; }
+
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.config-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.footer a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 640px) {
+  .header { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  .hero h1 { font-size: 1.5rem; }
+}

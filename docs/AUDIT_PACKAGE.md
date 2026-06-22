@@ -1,0 +1,70 @@
+# DTSC — External Audit Package
+
+**Protocol:** Decentralized T-Share Coin (DTSC)  
+**Network:** PulseChain (chain 369)  
+**Collateral:** pHEX T-shares only (`0x2b591e99afE9f32eAA6214f7B7629768c40Eeb39`)  
+**Status:** Pre-deploy — DTSC token does not exist on-chain yet
+
+---
+
+## Scope
+
+| In scope | Out of scope |
+|----------|--------------|
+| `src/core/*` (VaultManager, StabilityPool, RedemptionHandler, DTSC, RecoveryModule, PenaltyRouter, BuybackBurn) | Frontend |
+| `src/oracle/*` (HexPriceOracle, HexPriceAggregator, TwapRingBuffer) | eHEX / bridge tokens |
+| `src/valuation/TShareValuation.sol` | Immutable deployment |
+| `src/deploy/DTSCDeployer.sol` | Chainlink integration (interface only) |
+| `script/Deploy.s.sol`, `script/PreDeployChecklist.s.sol` | |
+
+---
+
+## Architecture summary
+
+1. **Custodial vaults (v1 default):** User deposits pHEX → VaultManager stakes → T-shares collateralize DTSC mint.
+2. **Stability Pool:** DTSC deposits absorb bad debt via P-factor (`offsetDebt`).
+3. **Redemption:** Burn DTSC → receive pHEX from custodial vaults (lowest CR first).
+4. **Oracle:** `min(TWAP, spot)` for liquidations; **TWAP-only** for borrow/mint (H-08).
+5. **Recovery mode:** System CR < 150% OR bad debt ≥ threshold.
+
+---
+
+## Known risks (auditor focus)
+
+| ID | Area | Question for auditors |
+|----|------|---------------------|
+| H-08 | Oracle | Is TWAP-only borrow sufficient vs multi-block manipulation? |
+| M-07 | Bad debt | Is `recordBadDebt` + recovery mode economically sound? |
+| M-04 | Gas | Is CR cache invalidation complete on all paths? |
+| C-04/05 | Redemption/Liquidation | Custodial HEX extraction correctness after partial `endStake` |
+| M-03 | Stability Pool | P-factor accounting vs `rewardDebt` after offset |
+
+---
+
+## Test evidence
+
+```powershell
+cd dtsc-protocol
+& "$env:USERPROFILE\.foundry\bin\forge.exe" test
+& "$env:USERPROFILE\.foundry\bin\forge.exe" test --profile ci
+```
+
+**Expected:** 156 tests PASS (23 suites), including attack scenarios, adversarial redemption, fuzz, invariants, and PulseChain fork tests.
+
+---
+
+## Pre-audit checklist
+
+- [ ] All tests pass locally and CI profile
+- [ ] `script/PreDeployChecklist.s.sol` run on PulseChain fork
+- [ ] `docs/AUDIT_FINDINGS.md` reviewed
+- [ ] No immutable contracts deployed
+- [ ] Stability Pool seed plan documented (≥ 10,000 DTSC before public mint)
+
+---
+
+## Suggested audit firms (contact separately)
+
+- Trail of Bits, OpenZeppelin, Consensys Diligence, Sherlock (contest), Code4rena (contest)
+
+Deliverables requested: full report, severity classification, fix review round.
