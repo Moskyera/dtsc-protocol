@@ -46,7 +46,7 @@
 ```powershell
 cd dtsc-protocol
 & "$env:USERPROFILE\.foundry\bin\forge.exe" test
-& "$env:USERPROFILE\.foundry\bin\forge.exe" test --profile ci
+$env:FOUNDRY_PROFILE='ci'; & "$env:USERPROFILE\.foundry\bin\forge.exe" test
 ```
 
 **Expected:** 156 tests PASS (23 suites), including attack scenarios, adversarial redemption, fuzz, invariants, and PulseChain fork tests.
